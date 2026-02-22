@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import { testConnection } from "./config/dbconnection";
 import taskRoutes from "./routes/taskRoutes";
 import employeeRoutes from "./routes/employeeRoutes";
+import authRoutes from "./routes/authRoutes";
 
 
 
@@ -15,6 +16,7 @@ app.use(cors());
 app.use(express.json());
 app.use("/api/tasks", taskRoutes);
 app.use("/api/employees", employeeRoutes);
+app.use("/api/auth", authRoutes);
 
 app.get("/health", (req, res) => {
   res.json({
