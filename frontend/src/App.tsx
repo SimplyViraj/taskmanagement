@@ -52,9 +52,9 @@ function App() {
 
   if (loading || checkingRole) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-600 to-blue-800 flex items-center justify-center">
+      <div className="min-h-screen  flex items-center justify-center">
         <div className="text-center">
-          <Loader className="w-12 h-12 animate-spin text-white mx-auto mb-4" />
+          <Loader className="w-12 h-12 animate-spin mx-auto mb-4" />
           <p className="text-white text-lg">Loading...</p>
         </div>
       </div>

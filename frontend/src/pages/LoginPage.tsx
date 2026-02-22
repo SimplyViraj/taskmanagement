@@ -26,51 +26,59 @@ export function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-600 to-blue-800 flex items-center justify-center px-4">
-      <div className="w-full max-w-md bg-white rounded-lg shadow-xl p-8">
-        <h1 className="text-3xl font-bold text-center text-gray-800 mb-2">Task Manager</h1>
-        <p className="text-center text-gray-600 mb-8">Sign in to your account</p>
+    <div className="relative min-h-screen w-full overflow-hidden flex items-center justify-center bg-white">
+      <div className="relative z-10 w-full max-w-md px-4">
+        
+        <form onSubmit={handleSubmit} className="bg-white/90 backdrop-blur-lg p-8 rounded-2xl shadow-xl border border-black/10">
+          
+          <h2 className="text-2xl font-bold text-black text-center">
+           Task Manager
+          </h2>
+          <p className="text-sm text-gray-500 text-center mt-1">
+            Sign in to continue
+          </p>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
+          <div className="mt-6">
+            <label className="text-sm font-medium text-black">
+              Email
+            </label>
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="you@example.com"
-              required
-              disabled={isLoading}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-100"
+              className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-black
+              placeholder:text-gray-400
+              focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent transition duration-700"
             />
           </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Password</label>
+          <div className="mt-4">
+            <label className="text-sm font-medium text-black">
+              Password
+            </label>
             <input
-              type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              type="password"
               placeholder="••••••••"
-              required
-              disabled={isLoading}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-100"
+              className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-black
+              placeholder:text-gray-400
+              focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent transition duration-700"
             />
           </div>
 
           <button
             type="submit"
-            disabled={isLoading}
-            className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-300 text-white font-semibold py-2 rounded-lg transition duration-200 flex items-center justify-center gap-2"
+            className="mt-6 w-full rounded-lg bg-black py-2.5 text-white font-semibold 
+            hover:bg-neutral-900 transition duration-2000 shadow-md"
           >
-            {isLoading && <Loader className="w-4 h-4 animate-spin" />}
-            {isLoading ? 'Signing in...' : 'Sign In'}
+            Login
           </button>
+         
+        
         </form>
 
-        <p className="text-center text-gray-600 text-sm mt-4">
-          Demo credentials: admin@example.com / admin123
-        </p>
       </div>
     </div>
   );

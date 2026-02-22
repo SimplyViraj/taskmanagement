@@ -72,7 +72,6 @@ export function DashboardLayout({ children, isAdmin }: DashboardLayoutProps) {
         </div>
       </div>
 
-      {/* Main Content */}
       <div className="flex-1 flex flex-col">
         {/* Top bar */}
         <header className="bg-white shadow">
