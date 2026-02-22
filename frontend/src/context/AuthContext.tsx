@@ -1,44 +1,85 @@
-import { createContext,useState,useEffect } from "react";
-import { supabase } from "../services/supabase";
+import { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
+import type { AuthUser } from '../types';
+import api from '../services/api';
 
-interface AuthContextType 
-{
-    user:any;
-    login:(email:string,password:string)=>Promise<void>;
-    logout:()=>Promise<void>;
-} 
+interface AuthContextType {
+  user: AuthUser | null;
+  token: string | null;
+  loading: boolean;
+  error: string | null;
+  login: (email: string, password: string) => Promise<void>;
+  logout: () => void;
+  isAuthenticated: boolean;
+}
 
-export const AuthContext = createContext<AuthContextType>(null!);
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export const AuthProvider = ({children}:any)=>
-    {
-        const [user,setUser] = useState<any>(null);
-        const login= async(email:string,password:string)=>
-        {
-            const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-            if(error) throw new Error(error.message);
-            localStorage.setItem("token",data.session.access_token);
-            setUser(data.user); 
-        }
-        const logout=async()=>
-        {
-            localStorage.removeItem("token");
-            setUser(null);
-        }
-       useEffect(() => {
-        const token = localStorage.getItem("token");
-        if (token) {
-            supabase.auth
-                .getUser(token)
-                .then(({ data }) => {
-                    setUser(data.user);
-                });
-        }
-            }, []);
+export function AuthProvider({ children }: { children: ReactNode }) {
+  const [user, setUser] = useState<AuthUser | null>(null);
+  const [token, setToken] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-    return (
-        <AuthContext.Provider value={{user,login,logout }}>
-            {children}
-        </AuthContext.Provider>
-    );
-};
+  // Check for existing token on mount
+  useEffect(() => {
+    const savedToken = localStorage.getItem('auth_token');
+    const savedUser = localStorage.getItem('auth_user');
+
+    if (savedToken && savedUser) {
+      setToken(savedToken);
+      setUser(JSON.parse(savedUser));
+    }
+    setLoading(false);
+  }, []);
+
+  const login = async (email: string, password: string) => {
+    try {
+      setError(null);
+      setLoading(true);
+      const response = await api.login(email, password);
+
+      setToken(response.access_token);
+      setUser(response.user);
+      localStorage.setItem('auth_token', response.access_token);
+      localStorage.setItem('auth_user', JSON.stringify(response.user));
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : 'Login failed';
+      setError(errorMessage);
+      throw err;
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const logout = () => {
+    setUser(null);
+    setToken(null);
+    setError(null);
+    localStorage.removeItem('auth_token');
+    localStorage.removeItem('auth_user');
+  };
+
+  return (
+    <AuthContext.Provider
+      value={{
+        user,
+        token,
+        loading,
+        error,
+        login,
+        logout,
+        isAuthenticated: !!user && !!token,
+      }}
+    >
+      {children}
+    </AuthContext.Provider>
+  );
+}
+
+export function useAuth() {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error('useAuth must be used within AuthProvider');
+  }
+  return context;
+}
