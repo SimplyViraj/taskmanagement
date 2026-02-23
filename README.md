@@ -4,7 +4,7 @@ A modern full-stack Task Management System built with React, TypeScript, Express
 
 ## Live Demo
 
-Frontend (Vercel): https://taskmanagement-sage-one.vercel.app
+Frontend (Vercel): [https://taskmanagement-sage-one.vercel.app](https://taskmanagement-two-psi.vercel.app/)
 
 ---
 
