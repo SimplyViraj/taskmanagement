@@ -2,7 +2,8 @@ import axios from 'axios';
 import type { AxiosInstance } from 'axios';
 import type { Task, Employee, AuthResponse, ApiResponse } from '../types';
 
-const API_BASE_URL = import.meta.env.VITE_API_URL|| 'http://localhost:5000/api';
+const API_BASE_URL =
+  import.meta.env.VITE_API_URL ||  'https://taskmanagement-ag5q.onrender.com/api';
 
 class ApiClient {
   private client: AxiosInstance;
