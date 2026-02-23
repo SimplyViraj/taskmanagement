@@ -12,7 +12,7 @@ dotenv.config();
 
 const app = express();
 
-app.use(cors());
+app.use(cors({origin: "https://taskmanagement-ag5q.onrender.com", credentials: true})); 
 app.use(express.json());
 app.use("/api/tasks", taskRoutes);
 app.use("/api/employees", employeeRoutes);
