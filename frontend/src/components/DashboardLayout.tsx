@@ -60,7 +60,7 @@ export function DashboardLayout({
         { label: "Employees", icon: Users, href: "#employees" },
         { label: "Calendar", icon: Calendar, href: "#calendar" },
       ]
-    : [{ label: "My Tasks", icon: Home, href: "#tasks" }];
+    : [{ label: "My Tasks", icon: Home, href: "#tasks" },{label: "Calendar", icon: Calendar, href: "#calendar" }];
 
   return (
     <div className="h-screen flex bg-background text-foreground overflow-hidden">

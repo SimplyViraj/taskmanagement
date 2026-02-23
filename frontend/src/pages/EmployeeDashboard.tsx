@@ -73,104 +73,286 @@ export function EmployeeDashboard() {
       </div>
     );
   }
+return (
+  <div className="min-h-screen bg-gradient-to-br from-[#f6f8fb] via-[#f3f6fa] to-[#eef2f7] p-6 space-y-6">
 
-  return (
-    <div className="space-y-6">
-      {/* Statistics Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
-        <div className="bg-white rounded-lg shadow p-6">
-          <p className="text-gray-600 text-sm font-medium">Assigned to You</p>
-          <p className="text-3xl font-bold text-gray-900 mt-2">{stats.total}</p>
-        </div>
-        <div className="bg-white rounded-lg shadow p-6">
-          <p className="text-gray-600 text-sm font-medium">Pending</p>
-          <p className="text-3xl font-bold text-gray-500 mt-2">{stats.pending}</p>
-        </div>
-        <div className="bg-white rounded-lg shadow p-6">
-          <p className="text-gray-600 text-sm font-medium">In Progress</p>
-          <p className="text-3xl font-bold text-blue-600 mt-2">{stats.inProgress}</p>
-        </div>
-        <div className="bg-white rounded-lg shadow p-6">
-          <p className="text-gray-600 text-sm font-medium">Completed</p>
-          <p className="text-3xl font-bold text-green-600 mt-2">{stats.completed}</p>
-        </div>
-        <div className="bg-white rounded-lg shadow p-6">
-          <p className="text-gray-600 text-sm font-medium">Overdue</p>
-          <p className={`text-3xl font-bold mt-2 ${stats.overdue > 0 ? 'text-red-600' : 'text-green-600'}`}>
-            {stats.overdue}
+
+    {/* ================= TOP GRID ================= */}
+    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+
+      {/* OVERALL INFO CARD */}
+      <div className="bg-white rounded-3xl shadow-sm border border-gray-100 p-7 flex flex-col justify-between">
+
+        <div>
+
+          <p className="text-gray-400 text-sm font-medium mb-6">
+            Your Task Summary
           </p>
+
+          <div className="flex gap-12">
+
+            <div>
+              <p className="text-5xl font-bold text-gray-900 tracking-tight">
+                {stats.completed}
+              </p>
+              <p className="text-gray-400 text-sm mt-1">
+                Completed
+              </p>
+            </div>
+
+            <div>
+              <p className="text-5xl font-bold text-gray-900 tracking-tight">
+                {stats.pending}
+              </p>
+              <p className="text-gray-400 text-sm mt-1">
+                Pending
+              </p>
+            </div>
+
+          </div>
+
         </div>
+
+
+        {/* bottom mini cards */}
+        <div className="grid grid-cols-3 gap-3 mt-8">
+
+          <div className="bg-gray-50 rounded-xl p-4">
+            <p className="text-lg font-semibold text-gray-900">
+              {stats.total}
+            </p>
+            <p className="text-xs text-gray-400">
+              Total
+            </p>
+          </div>
+
+          <div className="bg-gray-50 rounded-xl p-4">
+            <p className="text-lg font-semibold text-blue-600">
+              {stats.inProgress}
+            </p>
+            <p className="text-xs text-gray-400">
+              Active
+            </p>
+          </div>
+
+          <div className="bg-gray-50 rounded-xl p-4">
+            <p className={`text-lg font-semibold ${
+              stats.overdue > 0
+                ? "text-red-600"
+                : "text-green-600"
+            }`}>
+              {stats.overdue}
+            </p>
+            <p className="text-xs text-gray-400">
+              Overdue
+            </p>
+          </div>
+
+        </div>
+
       </div>
 
-      {/* Task Status Chart */}
-      <div className="bg-white rounded-lg shadow p-6">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">Task Overview</h3>
-        <ResponsiveContainer width="100%" height={250}>
-          <BarChart data={chartData} margin={{ top: 20, right: 30, left: 0, bottom: 20 }}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" />
-            <YAxis />
+
+
+      {/* TASK ACTIVITY CHART */}
+      <div className="bg-white rounded-3xl shadow-sm border border-gray-100 p-7">
+
+        <div className="mb-5">
+
+          <p className="text-gray-400 text-sm font-medium">
+            Task Activity
+          </p>
+
+          <p className="text-gray-900 font-semibold mt-1">
+            Current distribution
+          </p>
+
+        </div>
+
+        <ResponsiveContainer width="100%" height={180}>
+
+          <BarChart data={chartData}>
+
+            <CartesianGrid
+              strokeDasharray="3 3"
+              stroke="#f1f5f9"
+            />
+
+            <XAxis
+              dataKey="name"
+              tick={{ fill: "#9ca3af" }}
+              axisLine={false}
+              tickLine={false}
+            />
+
+            <YAxis
+              tick={{ fill: "#9ca3af" }}
+              axisLine={false}
+              tickLine={false}
+            />
+
             <Tooltip />
-            <Legend />
-            <Bar dataKey="tasks" fill="#3b82f6" />
+
+            <Bar
+              dataKey="tasks"
+              fill="#6366f1"
+              radius={[8, 8, 0, 0]}
+              barSize={40}
+            />
+
           </BarChart>
+
         </ResponsiveContainer>
+
       </div>
 
-      {/* My Tasks */}
-      <div className="bg-white rounded-lg shadow p-6">
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="text-2xl font-bold text-gray-900">My Tasks</h2>
+
+
+      {/* DARK PROGRESS CARD */}
+      <div className="rounded-3xl p-7 text-white shadow-sm relative overflow-hidden"
+        style={{
+          background:
+            "linear-gradient(135deg, #111827 0%, #1f2937 100%)"
+        }}
+      >
+
+        <p className="text-gray-300 text-sm mb-3">
+          Completion Progress
+        </p>
+
+        <p className="text-4xl font-bold mb-6">
+
+          {Math.round(
+            (stats.completed /
+              Math.max(stats.total, 1)) *
+              100
+          )}%
+
+        </p>
+
+
+        {/* progress bar */}
+        <div className="w-full bg-gray-700 rounded-full h-2">
+
+          <div
+            className="bg-white h-2 rounded-full transition-all duration-500"
+            style={{
+              width: `${
+                (stats.completed /
+                  Math.max(stats.total, 1)) *
+                100
+              }%`
+            }}
+          />
+
         </div>
 
-        {/* Filters */}
-        <div className="flex gap-4 mb-6 flex-wrap">
-          <div>
-            <label className="text-sm font-medium text-gray-700">Status:</label>
-            <select
-              value={filterStatus}
-              onChange={(e) => setFilterStatus(e.target.value as any)}
-              className="ml-2 px-3 py-1 border border-gray-300 rounded-lg"
-            >
-              <option value="all">All</option>
-              <option value="pending">Pending</option>
-              <option value="in-progress">In Progress</option>
-              <option value="completed">Completed</option>
-            </select>
-          </div>
-          <div>
-            <label className="text-sm font-medium text-gray-700">Priority:</label>
-            <select
-              value={filterPriority}
-              onChange={(e) => setFilterPriority(e.target.value as any)}
-              className="ml-2 px-3 py-1 border border-gray-300 rounded-lg"
-            >
-              <option value="all">All</option>
-              <option value="low">Low</option>
-              <option value="medium">Medium</option>
-              <option value="high">High</option>
-            </select>
-          </div>
-        </div>
+      </div>
 
-        {/* Tasks Grid */}
-        {filteredTasks.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {filteredTasks.map((task) => (
+    </div>
+
+
+
+    {/* ================= TASK SECTION ================= */}
+    <div className="bg-white rounded-3xl shadow-sm border border-gray-100 p-7">
+
+
+      {/* Header */}
+      <div className="mb-6">
+
+        <p className="text-gray-400 text-sm font-medium">
+          Your Tasks
+        </p>
+
+        <h2 className="text-xl font-semibold text-gray-900 mt-1">
+          Assigned Tasks
+        </h2>
+
+      </div>
+
+
+
+      {/* Filters */}
+      <div className="flex gap-3 mb-6 flex-wrap">
+
+        <select
+          value={filterStatus}
+          onChange={(e) =>
+            setFilterStatus(e.target.value as any)
+          }
+          className="px-4 py-2 rounded-xl bg-gray-50 border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+        >
+          <option value="all">All Status</option>
+          <option value="pending">Pending</option>
+          <option value="in-progress">
+            In Progress
+          </option>
+          <option value="completed">
+            Completed
+          </option>
+        </select>
+
+
+        <select
+          value={filterPriority}
+          onChange={(e) =>
+            setFilterPriority(e.target.value as any)
+          }
+          className="px-4 py-2 rounded-xl bg-gray-50 border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+        >
+          <option value="all">All Priority</option>
+          <option value="low">Low</option>
+          <option value="medium">
+            Medium
+          </option>
+          <option value="high">
+            High
+          </option>
+        </select>
+
+      </div>
+
+
+
+      {/* Tasks grid */}
+      {filteredTasks.length > 0 ? (
+
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
+
+          {filteredTasks.map(task => (
+
+            <div
+              key={task.id}
+              className="bg-gray-50 hover:bg-gray-100 transition rounded-2xl p-5 border border-gray-100"
+            >
+
               <TaskCard
-                key={task.id}
                 task={task}
                 isAdmin={false}
                 onStatusChange={handleStatusChange}
               />
-            ))}
-          </div>
-        ) : (
-          <p className="text-center text-gray-500 py-8">
-            {tasks.length === 0 ? 'No tasks assigned to you yet' : 'No tasks matching your filters'}
-          </p>
-        )}
-      </div>
+
+            </div>
+
+          ))}
+
+        </div>
+
+      ) : (
+
+        <div className="text-center py-14 text-gray-400">
+
+          {tasks.length === 0
+            ? "No tasks assigned yet"
+            : "No tasks match filters"}
+
+        </div>
+
+      )}
+
     </div>
-  );
+
+  </div>
+);
 }

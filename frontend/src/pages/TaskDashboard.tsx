@@ -3,23 +3,9 @@ import type { Task, Employee } from '../types';
 import api from '../services/api';
 import { useNotification } from '../context/NotificationContext';
 import { Loader } from 'lucide-react';
-import { TaskCard } from '../components/TaskCard';
 import { TaskModal } from '../components/TaskModal';
 import { TaskRow } from "../components/TaskRow";
-import {
-  PieChart,
-  Pie,
-  BarChart,
-  Bar,
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-  Cell,
-} from 'recharts';
+
 
 export function TaskDashboard() {
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -108,34 +94,7 @@ export function TaskDashboard() {
       new Date(a.created_at).getTime()
   );
 
-  // Calculate statistics
-  const stats = {
-    total: tasks.length,
-    pending: tasks.filter((t) => t.status === 'pending').length,
-    inProgress: tasks.filter((t) => t.status === 'in-progress').length,
-    completed: tasks.filter((t) => t.status === 'completed').length,
-  };
-
-  const statusData = [
-    { name: 'Pending', value: stats.pending, fill: '#6b7280' },
-    { name: 'In Progress', value: stats.inProgress, fill: '#3b82f6' },
-    { name: 'Completed', value: stats.completed, fill: '#10b981' },
-  ].filter((d) => d.value > 0);
-
-  const priorityData = [
-    {
-      priority: 'Low',
-      count: tasks.filter((t) => t.priority === 'low').length,
-    },
-    {
-      priority: 'Medium',
-      count: tasks.filter((t) => t.priority === 'medium').length,
-    },
-    {
-      priority: 'High',
-      count: tasks.filter((t) => t.priority === 'high').length,
-    },
-  ];
+ 
 
  
 
