@@ -143,124 +143,150 @@ export function AdminDashboard() {
   }
 
   return (
-    <div className="space-y-6">
-      {/* Statistics Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <div className="bg-white rounded-lg shadow p-6">
-          <p className="text-gray-600 text-sm font-medium">Total Tasks</p>
-          <p className="text-3xl font-bold text-gray-900 mt-2">{stats.total}</p>
-        </div>
-        <div className="bg-white rounded-lg shadow p-6">
-          <p className="text-gray-600 text-sm font-medium">Pending</p>
-          <p className="text-3xl font-bold text-gray-500 mt-2">{stats.pending}</p>
-        </div>
-        <div className="bg-white rounded-lg shadow p-6">
-          <p className="text-gray-600 text-sm font-medium">In Progress</p>
-          <p className="text-3xl font-bold text-blue-600 mt-2">{stats.inProgress}</p>
-        </div>
-        <div className="bg-white rounded-lg shadow p-6">
-          <p className="text-gray-600 text-sm font-medium">Completed</p>
-          <p className="text-3xl font-bold text-green-600 mt-2">{stats.completed}</p>
-        </div>
-      </div>
+  <div className="min-h-screen bg-gradient-to-br from-[#f4f6f8] to-[#eef1f5] p-6 space-y-6">
 
-      {/* Charts */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="bg-white rounded-lg shadow p-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Task Status Distribution</h3>
-          {statusData.length > 0 ? (
-            <ResponsiveContainer width="100%" height={200}>
-              <PieChart>
-                <Pie data={statusData} cx="50%" cy="50%" labelLine={false} label={(entry) => entry.name} dataKey="value">
-                  {statusData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={entry.fill} />
-                  ))}
-                </Pie>
-              </PieChart>
-            </ResponsiveContainer>
-          ) : (
-            <p className="text-center text-gray-500 h-32 flex items-center justify-center">No tasks yet</p>
-          )}
-        </div>
 
-        <div className="bg-white rounded-lg shadow p-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Tasks by Priority</h3>
-          <ResponsiveContainer width="100%" height={200}>
-            <BarChart data={priorityData}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="priority" />
-              <YAxis />
-              <Tooltip />
-              <Bar dataKey="count" fill="#3b82f6" />
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
+    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
-        <div className="bg-white rounded-lg shadow p-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Top 5 Employees (by tasks)</h3>
-          <ResponsiveContainer width="100%" height={200}>
-            <LineChart data={employeeTasksData}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="name" fontSize={12} />
-              <YAxis />
-              <Tooltip />
-              <Line type="monotone" dataKey="tasks" stroke="#3b82f6" dot={false} />
-            </LineChart>
-          </ResponsiveContainer>
-        </div>
-      </div>
+      <div className="bg-white rounded-2xl shadow-sm p-6 flex flex-col justify-between">
 
-      {/* Task Board */}
-      <div className="bg-white rounded-lg shadow p-6">
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="text-2xl font-bold text-gray-900">Task Board</h2>
-          <button
-            onClick={() => {
-              setSelectedTask(undefined);
-              setShowModal(true);
-            }}
-            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
-          >
-            Create New Task
-          </button>
-        </div>
+        <div>
+          <p className="text-gray-500 text-sm font-medium mb-4">
+            Overall Information
+          </p>
 
-        {/* Filters */}
-        <div className="flex gap-4 mb-6 flex-wrap">
-          <div>
-            <label className="text-sm font-medium text-gray-700">Status:</label>
-            <select
-              value={filterStatus}
-              onChange={(e) => setFilterStatus(e.target.value as any)}
-              className="ml-2 px-3 py-1 border border-gray-300 rounded-lg"
-            >
-              <option value="all">All</option>
-              <option value="pending">Pending</option>
-              <option value="in-progress">In Progress</option>
-              <option value="completed">Completed</option>
-            </select>
-          </div>
-          <div>
-            <label className="text-sm font-medium text-gray-700">Priority:</label>
-            <select
-              value={filterPriority}
-              onChange={(e) => setFilterPriority(e.target.value as any)}
-              className="ml-2 px-3 py-1 border border-gray-300 rounded-lg"
-            >
-              <option value="all">All</option>
-              <option value="low">Low</option>
-              <option value="medium">Medium</option>
-              <option value="high">High</option>
-            </select>
+          <div className="flex gap-10">
+
+            <div>
+              <p className="text-4xl font-bold text-gray-900">
+                {stats.completed}
+              </p>
+              <p className="text-gray-400 text-sm">
+                Tasks done
+              </p>
+            </div>
+
+            <div>
+              <p className="text-4xl font-bold text-gray-900">
+                {stats.pending}
+              </p>
+              <p className="text-gray-400 text-sm">
+                Tasks pending
+              </p>
+            </div>
+
           </div>
         </div>
 
-        {/* Tasks Grid */}
-        {filteredTasks.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {filteredTasks.map((task) => (
+
+        <div className="flex justify-between mt-6">
+
+          <div className="bg-gray-100 rounded-xl p-4 text-center flex-1 mr-2">
+            <p className="text-xl font-semibold">{stats.total}</p>
+            <p className="text-gray-400 text-xs">Total</p>
+          </div>
+
+          <div className="bg-gray-100 rounded-xl p-4 text-center flex-1 mx-2">
+            <p className="text-xl font-semibold">{stats.inProgress}</p>
+            <p className="text-gray-400 text-xs">In Progress</p>
+          </div>
+
+          <div className="bg-gray-100 rounded-xl p-4 text-center flex-1 ml-2">
+            <p className="text-xl font-semibold">{stats.completed}</p>
+            <p className="text-gray-400 text-xs">Completed</p>
+          </div>
+
+        </div>
+
+      </div>
+
+
+
+      <div className="bg-white rounded-2xl shadow-sm p-6">
+
+        <p className="text-gray-500 text-sm font-medium mb-4">
+          Weekly Progress
+        </p>
+
+        <ResponsiveContainer width="100%" height={160}>
+          <LineChart data={employeeTasksData}>
+            <Line
+              type="monotone"
+              dataKey="tasks"
+              stroke="#111"
+              strokeWidth={3}
+              dot={false}
+            />
+          </LineChart>
+        </ResponsiveContainer>
+
+      </div>
+
+
+      <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl shadow-sm p-6 text-white flex flex-col justify-between">
+
+        <div>
+
+          <p className="text-sm text-gray-300 mb-2">
+            Month Progress
+          </p>
+
+          <p className="text-3xl font-bold">
+            {Math.round(
+              (stats.completed / Math.max(stats.total, 1)) * 100
+            )}%
+          </p>
+
+        </div>
+
+
+        <div className="mt-4">
+
+          <ResponsiveContainer width="100%" height={120}>
+            <PieChart>
+              <Pie
+                data={statusData}
+                dataKey="value"
+                innerRadius={40}
+                outerRadius={55}
+              >
+                {statusData.map((entry, index) => (
+                  <Cell key={index} fill="#fff" opacity={0.7} />
+                ))}
+              </Pie>
+            </PieChart>
+          </ResponsiveContainer>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div>
+
+      <div className="flex justify-between items-center mb-4">
+
+        <p className="text-lg font-semibold text-gray-800">
+          Task in process ({stats.inProgress})
+        </p>
+
+      </div>
+
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+
+        {tasks
+          .filter((t) => t.status === "in-progress")
+          .slice(0, 2)
+          .map((task) => (
+
+            <div
+              key={task.id}
+              className="bg-white rounded-xl shadow-sm p-4 hover:shadow-md transition"
+            >
               <TaskCard
-                key={task.id}
                 task={task}
                 isAdmin
                 onEdit={(t) => {
@@ -270,23 +296,99 @@ export function AdminDashboard() {
                 onDelete={handleDeleteTask}
                 onStatusChange={handleStatusChange}
               />
-            ))}
-          </div>
-        ) : (
-          <p className="text-center text-gray-500 py-8">No tasks found</p>
-        )}
+            </div>
+
+          ))}
+
+
+        <div
+          onClick={() => {
+            setSelectedTask(undefined);
+            setShowModal(true);
+          }}
+          className="min-h-48 border-2 border-dashed border-gray-300 rounded-xl flex items-center justify-center cursor-pointer hover:border-gray-400 transition text-gray-400"
+        >
+          + Add task
+        </div>
+
+
       </div>
 
-      <TaskModal
-        isOpen={showModal}
-        onClose={() => {
-          setShowModal(false);
-          setSelectedTask(undefined);
-        }}
-        onSubmit={selectedTask ? handleUpdateTask : handleCreateTask}
-        task={selectedTask}
-        employees={employees}
-      />
     </div>
-  );
+
+    <div className="bg-white rounded-2xl shadow-sm p-6">
+
+      <div className="flex justify-between items-center mb-6">
+
+        <p className="text-xl font-semibold">
+          All Tasks
+        </p>
+
+        <button
+          onClick={() => {
+            setSelectedTask(undefined);
+            setShowModal(true);
+          }}
+          className="bg-black text-white px-5 py-2 rounded-xl hover:bg-gray-800 transition"
+        >
+          Create Task
+        </button>
+
+      </div>
+
+
+      {filteredTasks.length > 0 ? (
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+
+          {filteredTasks.map((task) => (
+
+            <div
+              key={task.id}
+              className="bg-gray-50 rounded-xl p-4 hover:shadow-md transition"
+            >
+
+              <TaskCard
+                task={task}
+                isAdmin
+                onEdit={(t) => {
+                  setSelectedTask(t);
+                  setShowModal(true);
+                }}
+                onDelete={handleDeleteTask}
+                onStatusChange={handleStatusChange}
+              />
+
+            </div>
+
+          ))}
+
+        </div>
+
+      ) : (
+
+        <p className="text-gray-400 text-center py-10">
+          No tasks found
+        </p>
+
+      )}
+
+    </div>
+
+
+
+    <TaskModal
+      isOpen={showModal}
+      onClose={() => {
+        setShowModal(false);
+        setSelectedTask(undefined);
+      }}
+      onSubmit={selectedTask ? handleUpdateTask : handleCreateTask}
+      task={selectedTask}
+      employees={employees}
+    />
+
+
+  </div>
+);
 }

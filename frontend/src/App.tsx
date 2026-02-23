@@ -8,8 +8,9 @@ import { DashboardLayout } from './components/DashboardLayout';
 import { NotificationContainer } from './components/NotificationContainer';
 import { Loader } from 'lucide-react';
 import api from './services/api';
-
-type CurrentPage = 'dashboard' | 'tasks' | 'employees';
+import { TaskDashboard } from './pages/TaskDashboard';
+import { AdminCalendar } from './pages/AdminCalendar';
+type CurrentPage = 'dashboard' | 'tasks' | 'employees' | 'calendar';
 
 function App() {
   const { isAuthenticated, loading, user } = useAuth();
@@ -17,7 +18,6 @@ function App() {
   const [currentPage, setCurrentPage] = useState<CurrentPage>('dashboard');
   const [checkingRole, setCheckingRole] = useState(true);
 
-  // Check user role
   useEffect(() => {
     const checkRole = async () => {
       if (isAuthenticated && user) {
@@ -35,11 +35,10 @@ function App() {
     checkRole();
   }, [isAuthenticated, user]);
 
-  // Handle navigation based on URL hash
   useEffect(() => {
     const handleHashChange = () => {
       const hash = window.location.hash.slice(1) || 'dashboard';
-      if (['dashboard', 'tasks', 'employees'].includes(hash)) {
+      if (['dashboard', 'tasks', 'employees','calendar'].includes(hash)) {
         setCurrentPage(hash as CurrentPage);
       }
     };
@@ -76,7 +75,9 @@ function App() {
         case 'employees':
           return <EmployeeManagement />;
         case 'tasks':
-          return <AdminDashboard />;
+          return <TaskDashboard />;
+        case 'calendar':
+          return <AdminCalendar />;
         default:
           return <AdminDashboard />;
       }

@@ -29,7 +29,11 @@ export function EmployeeManagement() {
 
   const handleCreateEmployee = async (employeeData: Partial<Employee> & { password?: string }) => {
     try {
-      const newEmployee = await api.createEmployee(employeeData);
+      if (!employeeData.password) {
+        addNotification('Password is required', 'error');
+        return;
+      }
+      const newEmployee = await api.createEmployee({ ...employeeData, password: employeeData.password });
       setEmployees([...employees, newEmployee]);
       addNotification('Employee created successfully', 'success');
     } catch (error) {

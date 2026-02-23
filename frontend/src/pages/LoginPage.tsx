@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useNotification } from '../context/NotificationContext';
 import { Loader } from 'lucide-react';
-
+import { BackgroundPaths } from '../components/ui/BackgroundsPath';
 export function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -27,6 +27,9 @@ export function LoginPage() {
 
   return (
     <div className="relative min-h-screen w-full overflow-hidden flex items-center justify-center bg-white">
+      <div className="absolute inset-0 z-0">
+        <BackgroundPaths />
+      </div>
       <div className="relative z-10 w-full max-w-md px-4">
         
         <form onSubmit={handleSubmit} className="bg-white/90 backdrop-blur-lg p-8 rounded-2xl shadow-xl border border-black/10">
