@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useNotification } from '../context/NotificationContext';
-import { Loader } from 'lucide-react';
 import { BackgroundPaths } from '../components/ui/BackgroundsPath';
 export function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  console.log(isLoading);
   const { login } = useAuth();
   const { addNotification } = useNotification();
 

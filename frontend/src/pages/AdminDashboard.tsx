@@ -8,14 +8,10 @@ import { TaskModal } from '../components/TaskModal';
 import {
   PieChart,
   Pie,
-  BarChart,
-  Bar,
+  
   LineChart,
   Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
+ 
   ResponsiveContainer,
   Cell,
 } from 'recharts';
@@ -28,6 +24,7 @@ export function AdminDashboard() {
   const [selectedTask, setSelectedTask] = useState<Task | undefined>();
   const [filterStatus, setFilterStatus] = useState<Task['status'] | 'all'>('all');
   const [filterPriority, setFilterPriority] = useState<Task['priority'] | 'all'>('all');
+  console.log(setFilterPriority,setFilterStatus);
   const { addNotification } = useNotification();
 
   const loadData = async () => {
@@ -38,6 +35,7 @@ export function AdminDashboard() {
       setEmployees(employeesData);
     } catch (error) {
       addNotification('Failed to load data', 'error');
+      console.log(error);
     } finally {
       setLoading(false);
     }
@@ -80,6 +78,7 @@ export function AdminDashboard() {
       addNotification('Task status updated', 'success');
     } catch (error) {
       addNotification('Failed to update task status', 'error');
+      console.log(error);
     }
   };
 
@@ -91,6 +90,7 @@ export function AdminDashboard() {
       addNotification('Task deleted successfully', 'success');
     } catch (error) {
       addNotification('Failed to delete task', 'error');
+      console.log(error);
     }
   };
 
@@ -114,20 +114,7 @@ export function AdminDashboard() {
     { name: 'Completed', value: stats.completed, fill: '#10b981' },
   ].filter((d) => d.value > 0);
 
-  const priorityData = [
-    {
-      priority: 'Low',
-      count: tasks.filter((t) => t.priority === 'low').length,
-    },
-    {
-      priority: 'Medium',
-      count: tasks.filter((t) => t.priority === 'medium').length,
-    },
-    {
-      priority: 'High',
-      count: tasks.filter((t) => t.priority === 'high').length,
-    },
-  ];
+ 
 
   const employeeTasksData = employees.slice(0, 5).map((emp) => ({
     name: emp.name,

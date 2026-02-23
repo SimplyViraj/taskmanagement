@@ -30,6 +30,7 @@ export function DashboardLayout({
   const [employee, setEmployee] = useState<Employee | null>(null);
 
   const [loading, setLoading] = useState(true);
+  console.log(loading);
   const { addNotification } = useNotification();
 
   useEffect(() => {

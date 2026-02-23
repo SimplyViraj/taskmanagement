@@ -60,16 +60,7 @@ export function TaskDashboard() {
     }
   };
 
-  const handleStatusChange = async (taskId: string, status: Task['status']) => {
-    try {
-      const updated = await api.updateTaskStatus(taskId, status);
-      setTasks(tasks.map((t) => (t.id === updated.id ? updated : t)));
-      addNotification('Task status updated', 'success');
-    } catch (error) {
-      addNotification('Failed to update task status', 'error');
-    }
-  };
-
+  
   const handleDeleteTask = async (taskId: string) => {
     if (!confirm('Are you sure you want to delete this task?')) return;
     try {
@@ -78,6 +69,7 @@ export function TaskDashboard() {
       addNotification('Task deleted successfully', 'success');
     } catch (error) {
       addNotification('Failed to delete task', 'error');
+      console.log(error);
     }
   };
 
