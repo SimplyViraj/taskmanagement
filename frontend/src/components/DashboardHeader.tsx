@@ -2,7 +2,7 @@ import {  Bell, Plus } from "lucide-react";
 
 export function DashboardHeader({children}: { children?: React.ReactNode }) {
   return (
-    <header className="flex items-center justify-between px-6 py-4 border-b border-border bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="flex items-center justify-between px-6 py-4  bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       
       <div>
         <h1 className="text-2xl font-semibold tracking-tight text-foreground">

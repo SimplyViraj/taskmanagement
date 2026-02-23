@@ -143,7 +143,7 @@ export function AdminDashboard() {
   }
 
   return (
-  <div className="min-h-screen bg-gradient-to-br from-[#f4f6f8] to-[#eef1f5] p-6 space-y-6">
+  <div className="min-h-screen bg-gradient-to-br from-white to-gray-100  space-y-6">
 
 
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">

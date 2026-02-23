@@ -63,12 +63,10 @@ export function DashboardLayout({
     : [{ label: "My Tasks", icon: Home, href: "#tasks" },{label: "Calendar", icon: Calendar, href: "#calendar" }];
 
   return (
-    <div className="h-screen flex bg-background text-foreground overflow-hidden">
+    <div className="h-screen flex text-foreground overflow-hidden bg-gradient-to-br from-neutral-100 via-neutral-200 to-neutral-300">
       {/* Sidebar */}
       <div
-        className={`${
-          collapsed ? "w-20" : "w-64"
-        } bg-transparent m-8 border rounded-xl flex flex-col transition-all duration-300 shrink-0`}
+       className={`${collapsed ? "w-20" : "w-64"} m-6 rounded-2xl flex flex-col transition-all duration-300 shrink-0 bg-gradient-to-br from-white to-gray-100  border border-white/40 shadow-[0_8px_32px_rgba(0,0,0,0.22)] `}
       >
         {/* Logo */}
         <div className="p-5 flex items-center gap-3">
@@ -87,14 +85,12 @@ export function DashboardLayout({
 
         {/* Navigation */}
         <nav className="flex-1 px-3 space-y-1 overflow-y-auto">
-          {menuItems.map((item, index) => (
+          {menuItems.map((item) => (
             <a
               key={item.href}
               href={item.href}
               className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-colors ${
-                index === 0
-                  ? "bg-primary text-primary-foreground"
-                  : "text-muted-foreground hover:bg-accent hover:text-foreground"
+                 "text-muted-foreground hover:bg-black/80 hover:text-white hover:text-foreground"
               }`}
             >
               <item.icon className="w-5 h-5 shrink-0" />
@@ -111,16 +107,15 @@ export function DashboardLayout({
               collapsed ? "justify-center" : ""
             }`}
           >
-            <div className="w-9 h-9 rounded-xl bg-primary flex items-center justify-center text-sm font-bold text-primary-foreground">
-              {employee?.name?.charAt(0).toUpperCase() ||
+            <div className="w-9 h-9 rounded-xl bg-primary flex items-center bg-red-500/20  justify-center text-sm font-bold text-primary-foreground">
+              {
                 user?.email?.charAt(0).toUpperCase()}
             </div>
 
             {!collapsed && (
               <div className="flex-1 truncate">
-                {/* ✅ FIX 3: show employee name */}
                 <p className="text-sm font-medium truncate">
-                  {employee?.name || user?.email}
+                  { user?.email}
                 </p>
               </div>
             )}
@@ -164,18 +159,22 @@ export function DashboardLayout({
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col p-4 overflow-hidden">
-        <DashboardHeader>
-          {isAdmin
-            ? employee?.name || "Admin Dashboard"
-            : "My Tasks"}
-        </DashboardHeader>
+     <div className="flex-1 flex flex-col gap-6 m-6 overflow-hidden">
 
-        {/* Content */}
-        <main className="flex-1 overflow-auto p-6">
-          {children}
-        </main>
-      </div>
+  {/* Header Glass Panel */}
+  <div className="rounded-2xl bg-gradient-to-br from-white to-gray-100  border border-white/40 shadow-[0_8px_12px_rgba(0,0,0,0.12)] px-6 py-4 shrink-0">
+    <DashboardHeader>
+      {isAdmin ? employee?.name || "Admin Dashboard" : "My Tasks"}
+    </DashboardHeader>
+  </div>
+
+
+  {/* Content Glass Panel */}
+  <main className=" flex-1 overflow-auto rounded-2xl bg-gradient-to-br from-white to-gray-100  border border-white/40  shadow-[0_8px_12px_rgba(0,0,0,0.12)] p-6 ">
+    {children}
+  </main>
+
+</div>
     </div>
   );
 }

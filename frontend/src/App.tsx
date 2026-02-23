@@ -87,10 +87,12 @@ function App() {
   };
 
   return (
+    <div className="glasscard bg-white">
     <DashboardLayout isAdmin={isAdmin}>
       {renderContent()}
       <NotificationContainer />
     </DashboardLayout>
+    </div>
   );
 }
 
