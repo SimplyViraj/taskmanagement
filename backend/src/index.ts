@@ -12,7 +12,7 @@ dotenv.config();
 
 const app = express();
 
-app.use(cors({origin: "https://taskmanagement-sage-one.vercel.app", credentials: true})); 
+app.use(cors({origin: "https://taskmanagement-two-psi.vercel.app", credentials: true})); 
 app.use(express.json());
 app.use("/api/tasks", taskRoutes);
 app.use("/api/employees", employeeRoutes);
