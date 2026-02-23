@@ -9,7 +9,7 @@ class ApiClient {
 
   constructor() {
     this.client = axios.create({
-      baseURL: API_BASE_URL,
+      baseURL: API_BASE_URL + "/api",
       timeout: 10000,
     });
 
